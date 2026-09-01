@@ -1,0 +1,568 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Checklist TEO</title>
+<meta name="description" content="Roteiro de estudos das 17 aulas teóricas. Marque cada aula conforme for estudando — de graça, sem cadastro obrigatório.">
+<meta property="og:title" content="Checklist TEO — roteiro de estudos">
+<meta property="og:description" content="Marque cada aula teórica conforme for estudando. Grátis, sem cadastro obrigatório.">
+<meta property="og:type" content="website">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root{
+    --ground:#f6f3ee;
+    --surface:#fffdfa;
+    --ink:#1e2227;
+    --ink-soft:#5e6670;
+    --line:#ddd7cd;
+    --accent:#0f6b63;
+    --accent-soft:#e2efec;
+    --done:#8d9096;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --ground:#15181b;
+      --surface:#1d2124;
+      --ink:#eae6df;
+      --ink-soft:#9aa1a8;
+      --line:#31373b;
+      --accent:#4fbfae;
+      --accent-soft:#1f2f2e;
+      --done:#6d757c;
+    }
+  }
+  :root[data-theme="dark"]{
+    --ground:#15181b;
+    --surface:#1d2124;
+    --ink:#eae6df;
+    --ink-soft:#9aa1a8;
+    --line:#31373b;
+    --accent:#4fbfae;
+    --accent-soft:#1f2f2e;
+    --done:#6d757c;
+  }
+  *{box-sizing:border-box}
+  body{
+    background:var(--ground);
+    color:var(--ink);
+    font-family:"IBM Plex Sans",system-ui,sans-serif;
+    margin:0;
+    padding:40px 20px 72px;
+    line-height:1.5;
+  }
+  .wrap{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:28px}
+  header{display:flex;flex-direction:column;gap:10px}
+  .eyebrow{
+    font-family:"IBM Plex Mono",monospace;
+    font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--ink-soft);
+  }
+  h1{
+    font-family:"Instrument Serif",Georgia,serif;
+    font-weight:400;font-size:clamp(2.2rem,6vw,3.2rem);
+    margin:0;line-height:1.05;text-wrap:balance;
+  }
+  .lede{color:var(--ink-soft);font-size:.95rem;max-width:56ch;margin:0}
+
+  .progress{
+    background:var(--surface);border:1px solid var(--line);
+    border-radius:4px;padding:18px 20px;
+    display:flex;flex-direction:column;gap:12px;
+  }
+  .progress-top{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+  .count{font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums;font-size:1.5rem}
+  .count small{color:var(--ink-soft);font-size:.9rem}
+  .bar{height:6px;background:var(--accent-soft);border-radius:3px;overflow:hidden}
+  .bar span{display:block;height:100%;background:var(--accent);width:0;transition:width .3s ease}
+  .reset{
+    background:none;border:1px solid var(--line);color:var(--ink-soft);
+    font:inherit;font-size:.8rem;padding:5px 12px;border-radius:3px;cursor:pointer;
+  }
+  .reset:hover{color:var(--ink);border-color:var(--ink-soft)}
+  .reset:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+  section{display:flex;flex-direction:column;gap:2px}
+  .block-head{
+    display:flex;align-items:baseline;gap:10px;
+    padding-bottom:8px;border-bottom:1px solid var(--line);margin-bottom:8px;
+  }
+  .block-head h2{
+    font-family:"Instrument Serif",Georgia,serif;font-weight:400;
+    font-size:1.35rem;margin:0;
+  }
+  .block-count{
+    font-family:"IBM Plex Mono",monospace;font-size:.75rem;
+    color:var(--ink-soft);font-variant-numeric:tabular-nums;margin-left:auto;
+  }
+  label.item{
+    display:flex;align-items:flex-start;gap:12px;
+    padding:11px 12px;border-radius:3px;cursor:pointer;
+  }
+  label.item:hover{background:var(--surface)}
+  label.item input{
+    appearance:none;-webkit-appearance:none;
+    width:17px;height:17px;flex:none;margin-top:2px;
+    border:1.5px solid var(--ink-soft);border-radius:3px;
+    background:transparent;cursor:pointer;position:relative;
+  }
+  label.item input:checked{background:var(--accent);border-color:var(--accent)}
+  label.item input:checked::after{
+    content:"";position:absolute;left:5px;top:1px;
+    width:4px;height:9px;border:solid var(--surface);
+    border-width:0 2px 2px 0;transform:rotate(42deg);
+  }
+  label.item input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .title{font-size:.97rem}
+  label.item input:checked ~ .title{color:var(--done);text-decoration:line-through;text-decoration-thickness:1px}
+  footer{color:var(--ink-soft);font-size:.8rem;border-top:1px solid var(--line);padding-top:14px}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+  /* ---- conta / sincronização (mesma linguagem visual) ---- */
+  .account{
+    display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+    padding-top:14px;margin-top:2px;border-top:1px solid var(--line);
+  }
+  .account-msg{font-size:.83rem;color:var(--ink-soft);flex:1;min-width:200px;margin:0}
+  .btn{
+    background:none;border:1px solid var(--line);color:var(--ink-soft);
+    font:inherit;font-size:.8rem;padding:6px 13px;border-radius:3px;cursor:pointer;
+    display:inline-flex;align-items:center;gap:7px;white-space:nowrap;
+  }
+  .btn:hover{color:var(--ink);border-color:var(--ink-soft)}
+  .btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .btn:disabled{opacity:.5;cursor:default}
+  .btn-primary{border-color:var(--accent);color:var(--accent)}
+  .btn-primary:hover{background:var(--accent-soft);color:var(--accent)}
+  .gmark{width:14px;height:14px;flex:none}
+  .who{display:flex;align-items:center;gap:9px;font-size:.83rem;color:var(--ink-soft);flex:1;min-width:200px}
+  .who img{width:22px;height:22px;border-radius:50%;flex:none}
+  .who b{font-weight:500;color:var(--ink)}
+  .sync-dot{
+    width:6px;height:6px;border-radius:50%;background:var(--accent);flex:none;
+    transition:opacity .3s ease;
+  }
+  .privacy{
+    font-size:.76rem;color:var(--ink-soft);margin:0;line-height:1.45;
+  }
+  .optin{
+    display:flex;align-items:flex-start;gap:10px;cursor:pointer;
+    font-size:.83rem;color:var(--ink-soft);padding-top:12px;
+    margin-top:12px;border-top:1px solid var(--line);
+  }
+  .optin input{
+    appearance:none;-webkit-appearance:none;
+    width:15px;height:15px;flex:none;margin-top:2px;
+    border:1.5px solid var(--ink-soft);border-radius:3px;
+    background:transparent;cursor:pointer;position:relative;
+  }
+  .optin input:checked{background:var(--accent);border-color:var(--accent)}
+  .optin input:checked::after{
+    content:"";position:absolute;left:4px;top:1px;
+    width:4px;height:8px;border:solid var(--surface);
+    border-width:0 2px 2px 0;transform:rotate(42deg);
+  }
+  .optin input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  [hidden]{display:none!important}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Roteiro de estudos · 17 aulas teóricas</div>
+    <h1>Checklist TEO</h1>
+    <p class="lede">Marque cada aula conforme for estudando.</p>
+  </header>
+
+  <div class="progress">
+    <div class="progress-top">
+      <div class="count"><span id="done">0</span><small> / 17 aulas</small></div>
+      <button class="reset" id="reset" type="button">Limpar marcações</button>
+    </div>
+    <div class="bar"><span id="fill"></span></div>
+
+    <!-- Estado A: visitante (sem login) -->
+    <div class="account" id="account-out">
+      <p class="account-msg" id="convite">Crie sua conta para salvar seu progresso em todos os aparelhos</p>
+      <button class="btn btn-primary" id="signin" type="button">
+        <svg class="gmark" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9 3.6l6.7-6.7C35.6 2.6 30.2 0 24 0 14.6 0 6.5 5.4 2.6 13.2l7.8 6.1C12.3 13.2 17.6 9.5 24 9.5z"/><path fill="#4285F4" d="M46.1 24.6c0-1.6-.1-3.2-.4-4.6H24v9.1h12.4c-.5 2.9-2.1 5.4-4.6 7l7.6 5.9c4.4-4.1 6.7-10.1 6.7-17.4z"/><path fill="#FBBC05" d="M10.4 28.7c-.5-1.5-.8-3.1-.8-4.7s.3-3.2.8-4.7l-7.8-6.1C1 16.4 0 20.1 0 24s1 7.6 2.6 10.8l7.8-6.1z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.6-5.9c-2.1 1.4-4.8 2.3-8.3 2.3-6.4 0-11.7-3.7-13.6-8.9l-7.8 6.1C6.5 42.6 14.6 48 24 48z"/></svg>
+        Entrar com o Google
+      </button>
+    </div>
+
+    <!-- Estado B: logado -->
+    <div class="account" id="account-in" hidden>
+      <div class="who">
+        <span class="sync-dot" id="sync-dot" title="Sincronizado"></span>
+        <img id="avatar" alt="" hidden>
+        <span><b id="uname"></b> <span id="sync-msg">· progresso salvo na sua conta</span></span>
+      </div>
+      <button class="btn" id="signout" type="button">Sair</button>
+    </div>
+
+    <!-- Opt-in (aparece só se você ligar no painel de administração) -->
+    <label class="optin" id="optin-row" hidden>
+      <input type="checkbox" id="optin">
+      <span id="optin-label">Quero ser avisado de projetos futuros para facilitar minha vida na med</span>
+    </label>
+  </div>
+
+  <div id="blocks"></div>
+
+  <footer>
+    <p class="privacy" id="footer-msg">Suas marcações ficam salvas neste navegador. Se você entrar com o Google, elas passam a ficar salvas na sua conta e acompanham você em qualquer aparelho.</p>
+    <p class="privacy" style="margin-top:8px">
+      Entrar é opcional. O login é feito pelo Google — este site nunca vê nem guarda a sua senha,
+      e não pede acesso ao seu e-mail, à sua agenda nem aos seus arquivos.
+      Cada pessoa só consegue ler e escrever o próprio progresso.
+      A única coisa guardada é quais aulas você marcou.
+    </p>
+  </footer>
+</div>
+
+<script type="module">
+import { FIREBASE_CONFIG, GA4_ID, CONVITE } from "./config.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+import {
+  getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect,
+  getRedirectResult, signOut, onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+import {
+  getFirestore, doc, getDoc, setDoc, onSnapshot, serverTimestamp, increment
+} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+
+/* ------------------------------------------------------------------ *
+ * 1. Conteúdo do checklist
+ * ------------------------------------------------------------------ */
+const BLOCKS = [
+  ["Biologia molecular e celular", [
+    "Controle da expressão gênica",
+    "Controle do ciclo celular",
+    "Replicação do DNA",
+    "Mutagênese",
+    "Reprogramação metabólica de células proliferativas"
+  ]],
+  ["Hematologia", [
+    "Introdução ao hemograma",
+    "Alterações hematológicas relacionadas à série branca"
+  ]],
+  ["Drenagem linfática (anatomia)", [
+    "Drenagem linfática do tórax",
+    "Drenagem linfática do abdome",
+    "Drenagem linfática da pelve",
+    "Drenagem linfática de cabeça, pescoço e membros"
+  ]],
+  ["Oncologia e imunologia", [
+    "Imunologia tumoral",
+    "Imunoterapia",
+    "Neoplasia da mama",
+    "Neoplasias na infância"
+  ]],
+  ["Farmacologia", [
+    "Formas farmacêuticas",
+    "Vias de administração"
+  ]]
+];
+const KEY = "teo-checklist-v1";
+const total = BLOCKS.reduce((n,b)=>n+b[1].length,0);
+
+/* ------------------------------------------------------------------ *
+ * 2. Google Analytics 4 (opcional)
+ * ------------------------------------------------------------------ */
+window.dataLayer = window.dataLayer || [];
+function gtag(){ window.dataLayer.push(arguments); }
+window.gtag = gtag;
+if (GA4_ID && /^G-/.test(GA4_ID)) {
+  const s = document.createElement("script");
+  s.async = true;
+  s.src = "https://www.googletagmanager.com/gtag/js?id=" + GA4_ID;
+  document.head.appendChild(s);
+  gtag("js", new Date());
+  gtag("config", GA4_ID);
+}
+function track(name, params){ try { gtag("event", name, params || {}); } catch(e){} }
+
+/* ------------------------------------------------------------------ *
+ * 3. Estado + persistência local (sempre ativa)
+ * ------------------------------------------------------------------ */
+let state = {};
+try { state = JSON.parse(localStorage.getItem(KEY) || "{}"); } catch(e) { state = {}; }
+
+function saveLocal(){
+  try { localStorage.setItem(KEY, JSON.stringify(state)); } catch(e) {}
+}
+
+/* ------------------------------------------------------------------ *
+ * 4. Montagem da lista (idêntica ao original)
+ * ------------------------------------------------------------------ */
+const blocks = document.getElementById("blocks");
+
+BLOCKS.forEach(([name, items], bi) => {
+  const sec = document.createElement("section");
+  const head = document.createElement("div");
+  head.className = "block-head";
+  const h2 = document.createElement("h2");
+  h2.textContent = name;
+  const cnt = document.createElement("span");
+  cnt.className = "block-count";
+  cnt.dataset.block = bi;
+  head.append(h2, cnt);
+  sec.append(head);
+  items.forEach((t, ii) => {
+    const id = bi + "-" + ii;
+    const lab = document.createElement("label");
+    lab.className = "item";
+    const cb = document.createElement("input");
+    cb.type = "checkbox";
+    cb.dataset.id = id;
+    cb.dataset.block = bi;
+    cb.checked = !!state[id];
+    const sp = document.createElement("span");
+    sp.className = "title";
+    sp.textContent = t;
+    lab.append(cb, sp);
+    sec.append(lab);
+  });
+  blocks.append(sec);
+});
+
+function doneCount(){
+  return Object.keys(state).filter(k => state[k]).length;
+}
+
+function render(){
+  document.querySelectorAll('input[type=checkbox][data-id]').forEach(cb => {
+    cb.checked = !!state[cb.dataset.id];
+  });
+  const done = doneCount();
+  document.getElementById("done").textContent = done;
+  document.getElementById("fill").style.width = (done/total*100) + "%";
+  document.querySelectorAll(".block-count").forEach(el => {
+    const bi = el.dataset.block;
+    const all = document.querySelectorAll('input[data-block="'+bi+'"]');
+    const d = [...all].filter(c=>c.checked).length;
+    el.textContent = d + "/" + all.length;
+  });
+}
+
+/* ------------------------------------------------------------------ *
+ * 5. Firebase — só liga se a configuração estiver preenchida
+ * ------------------------------------------------------------------ */
+const configured = FIREBASE_CONFIG.apiKey && !String(FIREBASE_CONFIG.apiKey).includes("COLE AQUI");
+let auth = null, db = null, user = null, unsubDoc = null, applyingRemote = false;
+
+const elOut     = document.getElementById("account-out");
+const elIn      = document.getElementById("account-in");
+const elConvite = document.getElementById("convite");
+const elOptinRow= document.getElementById("optin-row");
+const elOptin   = document.getElementById("optin");
+const elOptinLb = document.getElementById("optin-label");
+const elFooter  = document.getElementById("footer-msg");
+const elDot     = document.getElementById("sync-dot");
+const elSyncMsg = document.getElementById("sync-msg");
+
+elConvite.textContent = CONVITE;
+
+if (!configured) {
+  // Sem Firebase configurado a página continua 100% funcional, só local.
+  elOut.hidden = true;
+} else {
+  const app = initializeApp(FIREBASE_CONFIG);
+  auth = getAuth(app);
+  db   = getFirestore(app);
+
+  getRedirectResult(auth).catch(()=>{});
+  loadPublicConfig();
+
+  document.getElementById("signin").addEventListener("click", async () => {
+    const provider = new GoogleAuthProvider();
+    provider.setCustomParameters({ prompt: "select_account" });
+    track("login_start");
+    try {
+      await signInWithPopup(auth, provider);
+    } catch (err) {
+      // iOS / navegador dentro de app costuma bloquear popup — cai para redirect.
+      if (err && /popup|blocked|cancelled-by-user|operation-not-supported/i.test(err.code || "")) {
+        try { await signInWithRedirect(auth, provider); } catch(e){}
+      }
+    }
+  });
+
+  document.getElementById("signout").addEventListener("click", async () => {
+    track("logout");
+    await flushProgress();
+    await signOut(auth);
+  });
+
+  elOptin.addEventListener("change", async () => {
+    if (!user) return;
+    track(elOptin.checked ? "optin_yes" : "optin_no");
+    await setDoc(doc(db, "users", user.uid), {
+      notifyOptIn: elOptin.checked,
+      notifyOptInAt: elOptin.checked ? serverTimestamp() : null
+    }, { merge: true });
+  });
+
+  onAuthStateChanged(auth, async (u) => {
+    if (unsubDoc) { unsubDoc(); unsubDoc = null; }
+    user = u;
+    if (!u) {
+      elOut.hidden = false;
+      elIn.hidden = true;
+      elOptinRow.hidden = true;
+      elFooter.textContent = "Suas marcações ficam salvas neste navegador. Se você entrar com o Google, elas passam a ficar salvas na sua conta e acompanham você em qualquer aparelho.";
+      return;
+    }
+    elOut.hidden = true;
+    elIn.hidden = false;
+    document.getElementById("uname").textContent = (u.displayName || u.email || "").split(" ")[0];
+    if (u.photoURL) { const a = document.getElementById("avatar"); a.src = u.photoURL; a.hidden = false; }
+    elFooter.textContent = "Suas marcações estão salvas na sua conta e acompanham você em qualquer aparelho.";
+    await bootstrapUser(u);
+  });
+}
+
+/* ---- configuração pública (liga/desliga o opt-in pelo painel) ---- */
+async function loadPublicConfig(){
+  try {
+    const snap = await getDoc(doc(db, "config", "public"));
+    const cfg = snap.exists() ? snap.data() : {};
+    if (cfg.notifyLabel) elOptinLb.textContent = cfg.notifyLabel;
+    window.__optinEnabled = !!cfg.notifyCheckboxEnabled;
+    if (user && window.__optinEnabled) elOptinRow.hidden = false;
+  } catch(e) { window.__optinEnabled = false; }
+}
+
+/* ---- primeiro login: mescla o progresso local com o da conta ---- */
+async function bootstrapUser(u){
+  const ref = doc(db, "users", u.uid);
+  let remote = {};
+  let isNew = true;
+  try {
+    const snap = await getDoc(ref);
+    if (snap.exists()) { isNew = false; remote = snap.data() || {}; }
+  } catch(e) {}
+
+  // União: nada do que já estava marcado (aqui ou lá) é perdido.
+  const merged = Object.assign({}, remote.progress || {}, {});
+  let changed = false;
+  Object.keys(state).forEach(k => {
+    if (state[k] && !merged[k]) { merged[k] = true; changed = true; }
+  });
+  state = merged;
+  saveLocal();
+  render();
+
+  const base = {
+    profile: {
+      name: u.displayName || null,
+      email: u.email || null,
+      photo: u.photoURL || null
+    },
+    lastSeenAt: serverTimestamp(),
+    visits: increment(1),
+    doneCount: doneCount(),
+    total: total
+  };
+  if (isNew) { base.createdAt = serverTimestamp(); base.totalActiveSeconds = 0; }
+  if (isNew || changed) base.progress = state;
+
+  try { await setDoc(ref, base, { merge: true }); } catch(e) {}
+  track(isNew ? "sign_up" : "login", { migrated: changed ? 1 : 0 });
+
+  if (window.__optinEnabled) {
+    elOptinRow.hidden = false;
+    elOptin.checked = !!remote.notifyOptIn;
+  }
+
+  // Sincronização entre aparelhos em tempo real.
+  unsubDoc = onSnapshot(ref, (snap) => {
+    if (!snap.exists() || snap.metadata.hasPendingWrites) return;
+    const d = snap.data() || {};
+    if (d.progress) {
+      applyingRemote = true;
+      state = d.progress;
+      saveLocal();
+      render();
+      applyingRemote = false;
+    }
+    if (typeof d.notifyOptIn === "boolean") elOptin.checked = d.notifyOptIn;
+  }, ()=>{});
+}
+
+/* ---- gravação no banco, agrupada para não gastar à toa ---- */
+let saveTimer = null, pending = false;
+function queueProgress(){
+  if (!user || !db) return;
+  pending = true;
+  elDot.style.opacity = ".35";
+  elSyncMsg.textContent = "· salvando…";
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(flushProgress, 900);
+}
+async function flushProgress(){
+  clearTimeout(saveTimer);
+  if (!pending || !user || !db) return;
+  pending = false;
+  try {
+    await setDoc(doc(db, "users", user.uid), {
+      progress: state,
+      doneCount: doneCount(),
+      total: total,
+      lastSeenAt: serverTimestamp()
+    }, { merge: true });
+    elDot.style.opacity = "1";
+    elSyncMsg.textContent = "· progresso salvo na sua conta";
+  } catch(e) {
+    elSyncMsg.textContent = "· sem conexão, salvo neste aparelho";
+  }
+}
+
+/* ---- tempo de uso: acumulado só quando a aba está visível ---- */
+let activeSince = document.visibilityState === "visible" ? Date.now() : null;
+async function pushActiveTime(){
+  if (activeSince === null) return;
+  const secs = Math.round((Date.now() - activeSince) / 1000);
+  activeSince = null;
+  if (secs < 5 || !user || !db) return;
+  try {
+    await setDoc(doc(db, "users", user.uid), {
+      totalActiveSeconds: increment(secs),
+      lastSeenAt: serverTimestamp()
+    }, { merge: true });
+  } catch(e) {}
+}
+document.addEventListener("visibilitychange", () => {
+  if (document.visibilityState === "hidden") { flushProgress(); pushActiveTime(); }
+  else if (activeSince === null) { activeSince = Date.now(); }
+});
+window.addEventListener("pagehide", () => { flushProgress(); pushActiveTime(); });
+
+/* ------------------------------------------------------------------ *
+ * 6. Interação
+ * ------------------------------------------------------------------ */
+blocks.addEventListener("change", e => {
+  if (e.target.type !== "checkbox" || applyingRemote) return;
+  const id = e.target.dataset.id;
+  state[id] = e.target.checked;
+  if (!e.target.checked) delete state[id];
+  saveLocal();
+  render();
+  queueProgress();
+  track(e.target.checked ? "aula_marcada" : "aula_desmarcada", { aula: id, total_marcadas: doneCount() });
+  if (doneCount() === total) track("checklist_completo");
+});
+
+document.getElementById("reset").addEventListener("click", () => {
+  state = {};
+  try { localStorage.removeItem(KEY); } catch(e) {}
+  render();
+  queueProgress();
+  track("checklist_limpo");
+});
+
+render();
+</script>
+</body>
+</html>
