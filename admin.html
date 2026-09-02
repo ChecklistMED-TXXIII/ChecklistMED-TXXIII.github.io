@@ -342,8 +342,15 @@ document.getElementById("csv").addEventListener("click", () => {
     l.ultima ? l.ultima.toISOString() : "", l.criado ? l.criado.toISOString() : "",
     l.optin ? "sim" : "nao"
   ]);
+  // Impede que um nome começando com = + - @ seja interpretado como fórmula
+  // pelo Excel ou Google Sheets ao abrir o arquivo.
+  const seguro = c => {
+    let v = String(c);
+    if (/^[=+\-@\t\r]/.test(v)) v = "'" + v;
+    return '"' + v.replace(/"/g, '""') + '"';
+  };
   const csv = [cab, ...linhasCsv]
-    .map(r => r.map(c => '"' + String(c).replace(/"/g, '""') + '"').join(";"))
+    .map(r => r.map(seguro).join(";"))
     .join("\n");
   const url = URL.createObjectURL(new Blob(["﻿" + csv], {type:"text/csv;charset=utf-8"}));
   const a = document.createElement("a");
